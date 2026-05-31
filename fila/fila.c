@@ -3,62 +3,59 @@
 #include "fila.h"
 
 
-No* criar_elemento(No *head){
-    No *novo = malloc(sizeof(No));
-    novo->proximo = NULL; 
-    novo->anterior = NULL;
 
+No* criar(){
+    No *novo = malloc(sizeof(No));
+    novo->anterior = NULL;
     return novo;
 }
 
-fila* incerir(fila *minha_fila, int num){
+fila* push(fila *minha_fila,int num){
 
-    No *novo = criar_elemento(minha_fila->primeiro);
+    No* novo = criar();
 
     if (novo != NULL){
+
         novo->valor = num;
-        printf("numero %d alocado\n",num);
-        if(minha_fila->primeiro != NULL){
-            novo->proximo = minha_fila->ultimo;
-            novo->anterior = minha_fila->primeiro;
-            minha_fila->ultimo->anterior = novo;
-            minha_fila->primeiro->proximo = novo;
-            minha_fila->ultimo = novo;
+        printf("numero %d alocado\n",novo->valor);
 
-        }else if (minha_fila->primeiro == NULL){
-            minha_fila->primeiro = novo;
-            minha_fila->ultimo= novo;
-            novo->anterior = novo;
-            novo->proximo = novo;
+        if (minha_fila->comeco == NULL){
+            minha_fila->comeco = novo;
+            minha_fila->fim = novo;
         }else{
-            printf("houve um erro de alocação");
-
+            minha_fila->fim->anterior = novo;
+            minha_fila->fim = novo;
         }
         
     }
-    return minha_fila;
-    
-}   
-
-fila* retirada(fila *minha_fila){
-    No* apagando = minha_fila->primeiro; 
-    minha_fila->primeiro = apagando->anterior;
-    minha_fila->ultimo->anterior = apagando->anterior;
-    free(apagando);
+    else{
+        printf("houve um erro na alocação \n");
+    }
     return minha_fila;
 }
 
-int escreve(fila *minha_fila){
-    if (minha_fila->primeiro == NULL){
-        printf("--> A lista esta vazia!\n");
-        return 0;
+void pop(fila *minha_fila){
+
+    if (minha_fila->comeco != NULL){
+        No* apagando = minha_fila->comeco;
+        minha_fila->comeco = minha_fila->comeco->anterior;
+        free(apagando);
+    }else{
+        printf("a lista esta vazia\n");
+    } 
+}
+
+
+int imprimir(fila *minha_fila){
+    if (minha_fila->comeco != NULL){
+        No *p;
+        p = minha_fila->comeco;
+        while (p != NULL){
+            printf("%d; ",p->valor);
+            p = p->anterior;
+        }
+    }else{
+        printf("a lista esta vazia\n");
     }
 
-    No *p = minha_fila->ultimo;
-
-    do{
-        printf("%d; ",p->valor);
-        p = p->proximo;
-    }while (p != minha_fila->ultimo);
 }
-

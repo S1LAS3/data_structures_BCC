@@ -3,17 +3,16 @@
 
 typedef struct No{
     int valor;
-    struct No *proximo;
     struct No *anterior;
 }No;
 
 typedef struct fila{
-    No *primeiro;
-    No *ultimo;
+    No *fim;
+    No *comeco;
 }fila;
 
-fila* incerir(fila *minha_fila, int num);
-fila* retirada(fila *minha_fila);
-int escreve(fila *minha_fila);
+fila* push(fila *minha_fila, int num);
+void pop(fila *minha_fila);
+int imprimir(fila *minha_fila);
 
 #endif
