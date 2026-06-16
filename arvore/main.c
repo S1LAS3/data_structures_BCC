@@ -32,7 +32,6 @@ int main(){
             imprimir(minha_arv->raiz);
             printf("\valores em ordem crescente\n");
             break;
-
         case 4:
             printf("\033[H\033[J");
             break;
