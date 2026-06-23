@@ -5,6 +5,7 @@ typedef struct No{
     int valor;
     struct No *direita;
     struct No *esquerda;
+    short altura;
 }No;
 
 typedef struct {

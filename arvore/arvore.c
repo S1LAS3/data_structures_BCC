@@ -2,6 +2,32 @@
 #include <stdio.h>
 #include "arvore.h"
 
+short maior(short a, short b){
+    return (a>b)? a: b;
+}
+short altura_no(No* no){
+    if (no == NULL){
+        return -1;
+    }else{
+        return no->altura;
+    }
+    
+}
+short fator_balanceamento(No* no){
+    if (no){
+        return (altura_no(no->esquerda) - altura_no(no->direita));
+    }else return 0;
+    
+}
+
+void atualizarAltura(No* no) {
+    if (no != NULL) {
+        no->altura = 1 + maior(altura_no(no->esquerda), altura_no(no->direita));
+    }
+}
+
+
+
 
 No* incerir(No* raiz, int num){
     if (raiz == NULL){
@@ -9,6 +35,7 @@ No* incerir(No* raiz, int num){
         novo->valor = num; 
         novo->direita = NULL;
         novo->esquerda = NULL;  
+        novo->altura = 0;
         return novo;
 
     }else{
@@ -17,6 +44,7 @@ No* incerir(No* raiz, int num){
         }else if (num > raiz->valor){
             raiz->direita = incerir(raiz->direita, num); 
         }
+        atualizarAltura(raiz);
         return raiz;
     }
     
@@ -73,8 +101,10 @@ No* remover(No* raiz, int valor){
             }else{
                 raiz->direita = remover(raiz->direita, valor);
             }
+            
             return raiz;
         }
     }
     
 }
+
